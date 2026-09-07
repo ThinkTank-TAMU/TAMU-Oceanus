@@ -11,7 +11,7 @@ received_data = []
 def notification_handler(sender, data):
     decoded = data.decode("utf-8")
 
-    if decoded == "<<EOF>>":                        # transmission complete
+    if decoded == "EOF":                        # transmission complete
         full_text = "".join(received_data)
         print("File received!")
 
