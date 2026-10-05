@@ -66,6 +66,21 @@ vehicle, so control logic tested here transfers to the Navigator unchanged.
 - Always `git add` explicitly after a `git mv` — staging the move doesn't stage
   in-file path edits (this caused a follow-up fix PR once).
 
+### Station keeping and SITL parameters (Sept 2026)
+
+- **Station keeping is camera-based** (`scripts/station_keeping.py --source vision`, the
+  default). IMU + depth cannot give horizontal position: accelerometer error grows as
+  t². The EKF source works only in SITL, which simulates a GPS, or with a DVL.
+- **Two MAVProxy ports, one client each.** Run a second script on 5781, not 5780.
+- **SITL loads `params/vectored_6dof.parm`, then `params/sitl.parm`** (`sim_entry.sh`).
+  Put anything SIM-only in `sitl.parm`, never in the vehicle file.
+- **`SIM_BARO_RND` must stay small (0.01).** The stock 0.2 adds ~20 cm of depth
+  noise and makes depth hold look broken.
+- **Rendered-camera tests use `SIM_STATE` truth** (`lat_int`/`lon_int`, not the float
+  `lat`/`lon`, which are ~0.4 m coarse). Never use the EKF as ground truth.
+- **ArduSub ignores stick input within ±`RCn_DZ` (30 µs).** Controllers must map past
+  it (`gnc_link.axis_pwm`).
+
 ## Where work stands
 
 Goals 1 (6-DoF sim + custom frame) and 2 (servo control architecture) are

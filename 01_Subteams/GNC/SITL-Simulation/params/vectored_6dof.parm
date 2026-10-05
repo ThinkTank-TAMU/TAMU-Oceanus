@@ -1,20 +1,44 @@
-# Custom 6-DoF frame parameters — Team Oceanus ROV
-# Frame: BlueROV2 "Heavy" geometry = 4 vectored horizontal + 4 vertical thrusters
-# (the vectored_6dof sim frame loads these automatically; this file is the
-#  reference set to `param load` onto the real Navigator via QGroundControl.)
+# Team Oceanus ROV - vehicle parameter set (ArduSub 4.5)
+# Frame: BlueROV2 "Heavy" geometry = 4 vectored horizontal + 4 vertical thrusters.
+#
+# This is the controlled configuration of the real vehicle: load it onto the
+# Navigator with QGroundControl (Parameters -> Tools -> Load from file). SITL
+# loads it too (sim_entry.sh), then params/sitl.parm on top for sim-only values,
+# so the simulator flies the same configuration as the vehicle.
+#
+# Nothing in this file is SIM-only. Do not add ARMING_CHECK 0 here.
 
-FRAME_CONFIG     2      # 2 = Vectored_6DOF  (independent surge/sway/heave/roll/pitch/yaw)
+FRAME_CONFIG     2      # 2 = Vectored_6DOF (independent surge/sway/heave/roll/pitch/yaw)
+ARMING_CHECK     1      # all prearm checks on
 
-# --- SIM ONLY ---------------------------------------------------------------
-# Skip prearm checks so you can arm/dive in SITL without GPS/compass fuss.
-# RE-ENABLE (set to 1) before touching real hardware.
-ARMING_CHECK     0
-
-# --- Pilot limits (gentle starting points) ----------------------------------
-PILOT_SPEED_UP   50
+# --- Pilot limits ---------------------------------------------------------------
+PILOT_SPEED_UP   50     # cm/s max climb/descent from the stick (gentle, for precise tasks)
 PILOT_SPEED_DN   50
 
-# --- Autopilot assists used in the mission (Depth Hold / Heading Hold) -------
-# Starting points only — tune in QGroundControl against SITL, then port to HW.
-PSC_POSZ_P       1.0    # depth-hold position gain   (cf. kp_Depth in pseudocode)
-ATC_ANG_YAW_P    0.5    # heading-hold yaw gain      (cf. kp_Yaw   in pseudocode)
+# --- Depth hold / heading hold -----------------------------------------------------
+# ArduSub defaults. The earlier values here (PSC_POSZ_P 1.0, ATC_ANG_YAW_P 0.5) were
+# copied from the pseudocode's kp_Depth / kp_Yaw, which are not the same quantities:
+# ATC_ANG_YAW_P 0.5 is 12x softer than the default and gives a sluggish heading hold.
+# Verified in SITL with realistic depth-sensor noise: depth held to +/-1.75 cm in a
+# 0.5 m/s current (requirement GNC-ROV-04.01: +/-5 cm).
+PSC_POSZ_P       3.0    # depth position gain (default)
+ATC_ANG_YAW_P    6.0    # heading angle gain (default)
+
+# --- Manipulator servos (GNC-ICD-01: PWM ch 14-16) -----------------------------------
+# 0 = Disabled lets the topside drive them directly with MAV_CMD_DO_SET_SERVO.
+SERVO14_FUNCTION 0
+SERVO15_FUNCTION 0
+SERVO16_FUNCTION 0
+
+# --- Water density --------------------------------------------------------------------
+# 1.0 fresh water; set 1.025 before the ice-tank tasks (Requirement Calculations C7).
+BARO_SPEC_GRAV   1.0
+
+# --- Failsafes: PROPOSED, not yet approved with C&C / EPS (SDD Table 19). ---------------
+# Uncomment once agreed. Values are ArduSub 4.5 enumerations.
+# FS_GCS_ENABLE    4    # lost topside heartbeat (2.5 s): 4 = enter SURFACE mode (default 2 = disarm)
+# FS_LEAK_ENABLE   2    # leak: 2 = enter SURFACE mode (default 1 = warn only)
+# BATT_FS_LOW_ACT  3    # low voltage: 3 = enter SURFACE mode; needs BATT_LOW_VOLT from EPS
+# FS_EKF_ACTION    1    # EKF failure: 1 = warn only
+# FS_PRESS_ENABLE  1    # enclosure pressure over FS_PRESS_MAX: warn
+# FS_TEMP_ENABLE   1    # enclosure temperature over FS_TEMP_MAX: warn

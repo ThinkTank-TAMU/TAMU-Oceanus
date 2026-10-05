@@ -31,4 +31,9 @@ corners**. Confirm in `Thruster Configuration Assembly.SLDASM` (top-down):
 - Horizontals **45°-vectored** → `vectored_6dof` is exact, no extra work.
 - Horizontals **straight** → custom motor matrix needed (recompile ArduSub).
 
+The Technical Report draft describes the chassis as "two [thrusters] on each side
+plate, and four underneath the electronics enclosure mounted to a baseplate", with
+slanted side plates. It does not say which group is horizontal, or at what angle.
+Confirm with TMS both the angle of the horizontals and which four are vertical.
+
 Validated in SITL — see [SITL-Simulation/](SITL-Simulation/).

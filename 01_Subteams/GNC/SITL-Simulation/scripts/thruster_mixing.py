@@ -15,7 +15,8 @@ Usage:
 """
 import sys
 import time
-from pymavlink import mavutil
+
+import gnc_link as gl
 
 conn = sys.argv[1] if len(sys.argv) > 1 else "tcp:127.0.0.1:5780"
 SUB_MODE_MANUAL = 19
@@ -25,22 +26,16 @@ KICK = 1750  # how hard to push each axis
 # ArduSub default RC channel functions
 AXES = {"pitch": 0, "roll": 1, "throttle": 2, "yaw": 3, "forward": 4, "lateral": 5}
 
-master = mavutil.mavlink_connection(conn)
-master.wait_heartbeat()
-print(f"Connected to {conn}.")
+master = gl.connect(conn)
+print(f"Connected to {conn} ({'SITL' if gl.is_sitl(master) else 'VEHICLE - secure it on the stand'}).")
 time.sleep(2)  # let the autopilot finish booting
 
-# SIM ONLY: relax prearm checks so we can arm without GPS/compass fuss.
-master.mav.param_set_send(master.target_system, master.target_component,
-                          b"ARMING_CHECK", 0, mavutil.mavlink.MAV_PARAM_TYPE_INT8)
-time.sleep(0.5)
-master.mav.set_mode_send(master.target_system,
-                         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
-                         SUB_MODE_MANUAL)
-master.mav.command_long_send(
-    master.target_system, master.target_component,
-    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 21196, 0, 0, 0, 0, 0)
-master.motors_armed_wait()
+gl.set_mode(master, SUB_MODE_MANUAL)
+# gnc_link.arm relaxes prearm checks and force-arms ONLY when the autopilot is SITL;
+# on the vehicle it is a normal arm request that ArduSub's prearm checks can refuse.
+if not gl.arm(master, timeout=5.0):
+    print("Did not arm within 5 s:", "; ".join(gl.prearm_messages(master)) or "no reason given")
+    sys.exit(1)
 print("Armed (MANUAL).\n")
 
 
@@ -67,19 +62,21 @@ def read_servos():
 
 print(f"{'COMMAND':12s} | {'horizontal 1-4':^23s} | {'vertical 5-8':^23s}")
 print("-" * 66)
-for label, axis in [("neutral", None), ("forward", "forward"), ("lateral", "lateral"),
-                    ("heave", "throttle"), ("yaw", "yaw"),
-                    ("roll", "roll"), ("pitch", "pitch")]:
-    override(**({axis: KICK} if axis else {}))
-    vals = read_servos() or [0] * 8
-    h = " ".join(f"{v}" for v in vals[:4])
-    v = " ".join(f"{v}" for v in vals[4:])
-    print(f"{label:12s} | {h:^23s} | {v:^23s}")
+try:
+    for label, axis in [("neutral", None), ("forward", "forward"), ("lateral", "lateral"),
+                        ("heave", "throttle"), ("yaw", "yaw"),
+                        ("roll", "roll"), ("pitch", "pitch")]:
+        override(**({axis: KICK} if axis else {}))
+        vals = read_servos() or [0] * 8
+        h = " ".join(f"{v}" for v in vals[:4])
+        v = " ".join(f"{v}" for v in vals[4:])
+        print(f"{label:12s} | {h:^23s} | {v:^23s}")
+except KeyboardInterrupt:
+    print("\ninterrupted")
+finally:
+    # always: thrust to neutral, hand the sticks back, disarm
+    gl.release_overrides(master)
+    gl.disarm(master)
 
-override()  # release to neutral
-master.mav.command_long_send(
-    master.target_system, master.target_component,
-    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 0, 0, 0, 0, 0, 0, 0)
-master.motors_disarmed_wait()
 print("\nDisarmed. Horizontal thrusters drive surge/sway/yaw; verticals drive "
-      "heave/roll/pitch — independent roll & pitch = true 6-DoF.")
+      "heave/roll/pitch - independent roll & pitch = true 6-DoF.")
