@@ -8,8 +8,14 @@ set -euo pipefail
 cd "$HOME/ardupilot"
 
 echo ">> Starting ArduSub SITL (frame: vectored_6dof)…"
+# Load the vehicle's own parameter file, then the SIM-only overrides, so the sim
+# flies the configuration the real ROV gets. /sim/params is the mounted ./params.
+PARAMS=()
+for f in /sim/params/vectored_6dof.parm /sim/params/sitl.parm; do
+    [ -f "$f" ] && PARAMS+=(--add-param-file="$f") && echo "   params: $f"
+done
 Tools/autotest/sim_vehicle.py -v ArduSub -f vectored_6dof \
-    --no-rebuild --no-mavproxy -w -l 33.6,-118.0,0,0 \
+    --no-rebuild --no-mavproxy -w -l 33.6,-118.0,0,0 "${PARAMS[@]}" \
     >/tmp/sitl.log 2>&1 &
 
 echo ">> Waiting for firmware on tcp:5760…"

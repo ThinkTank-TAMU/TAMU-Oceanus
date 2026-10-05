@@ -28,21 +28,34 @@ resolution needs either a DVL (for example a Water Linked A50: ±1 % long-term, 
 from 5 cm altitude) or visual servoing. Without one of them, the pilot closes the
 loop by camera.
 
-## C2 — Position-hold tolerance ±35 cm (GNC-ROV-03.01) — PLACEHOLDER
+## C2 — Position-hold tolerance ±13 cm (GNC-ROV-03.01)
 
-- **Geometry (manual, Task 1.3):** a 50 cm blue square sits centred in a 130 cm red
-  square. That leaves (130 − 50) / 2 = **40 cm** of floor between them on each side.
-  Any drift of the camera footprint larger than this shows red or cuts off blue.
-- **SITL (`sample-runs/variable-current_*`):** the tuned `station_keeping.py` held
-  **mean 0.12 m / max 0.31 m** against a random current that changed 13 times. In
-  `current-compensation_*` it recovered to within ~0.2 m against a steady 0.4 m/s current.
-- **Placeholder:** ±35 cm. It covers the SITL maximum (31 cm) and stays under the
-  40 cm geometric limit.
+Replaces the earlier ±35 cm placeholder, which was too loose.
 
-**To finalise:** the true limit depends on the camera's horizontal FOV and the hold
-altitude, because the image footprint has to contain the blue square with margin. Replace
-the placeholder once C&C fixes the camera (C&C-ROV-02.02 / 02.03). Hardware results
-will be worse than SITL, which has no sensor noise or tether drag.
+- **Rule (manual, Task 1.3):** hold for 30 s with the **entire 50 cm blue square** in
+  the video and **no part of the red 130 cm square** visible. The red square's clear
+  span is taken as 1.28 m (130 cm less one ½-inch pipe width).
+- **Geometry:** a camera image W wide and H tall shows a floor footprint w × (H/W)·w.
+  With the ROV off-centre by d, along each image axis:
+  - blue fully visible: (H/W)·w/2 ≥ 0.25 + d (the short axis binds)
+  - red not visible: w/2 + d ≤ 0.64 (the long axis binds)
+- **Widest margin:** set the two limits equal, which gives w = (1.28 + 0.50) / (1 + H/W)
+  and allowed drift d = (1.28 − w) / 2:
+
+| Image | Footprint width w | Allowed drift d |
+|---|---|---|
+| 4:3 | 1.02 m | **±13 cm** |
+| 16:9 | 1.14 m | **±7 cm** |
+
+  The camera's field of view sets the **height** that gives this footprint,
+  h = (w/2) / tan(HFOV/2); for example 0.61 m at 80°. It does not change the margin.
+  At zero drift the usable height band at 80° is 0.40–0.76 m.
+- **Requirement:** ±13 cm with the task camera in a 4:3 mode, heading aligned with
+  the square. With 16:9 video the requirement tightens to ±7 cm.
+- **SITL (vision station keeping, `sample-runs/vision-task13_hold.*`):** 0.3 cm mean /
+  1.2 cm max true error after settling, with the current changing 0.3 → 0.5 → 0.2 m/s
+  in three directions. The judging condition was met for 48.2 s of a 50 s run.
+  SITL has no tether drag, turbidity or camera noise, so expect hardware to be worse.
 
 ## C3 — Depth hold ±5.0 cm (GNC-ROV-04.01)
 
@@ -51,9 +64,11 @@ will be worse than SITL, which has no sensor noise or tether drag.
 - **Sensor:** Bar30 (MS5837-30BA) resolution is 0.2 mbar ≈ **2 mm** of water, so it
   can resolve this band. Its absolute accuracy (±200 mbar) is poor, so depth is
   measured *relative to a surface zero* taken at launch.
-- **SITL gap:** at 0.4 m hold depth in current, the sample runs show a max deviation
-  of about 16.8 cm (σ ≈ 6.8 cm). The requirement is **not yet met in simulation**,
-  so depth-loop tuning (PSC_* / ALT_HOLD gains) is an open GNC task before CDR.
+- **SITL:** the earlier "16.8 cm max, not met" result was a **simulation artefact**.
+  Stock SITL adds `SIM_BARO_RND = 0.2`, the copter air-barometer default, which is
+  about 20 cm of noise on depth. With Bar30-like noise (`params/sitl.parm`,
+  `SIM_BARO_RND 0.01`), ArduSub's default depth gains hold **±1 cm in still water and
+  ±1.75 cm in a 0.5 m/s current**. That is met in simulation; confirm on the vehicle.
 
 ## C4 — Latency limits (GNC-ROV-04.03 / 04.04)
 

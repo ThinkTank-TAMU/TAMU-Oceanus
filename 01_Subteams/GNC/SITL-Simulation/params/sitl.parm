@@ -1,0 +1,11 @@
+# SITL-ONLY parameters. Loaded by sim_entry.sh after vectored_6dof.parm.
+# Never load this file onto the vehicle.
+
+# The sim has no calibrated compass/GPS setup to satisfy prearm checks.
+ARMING_CHECK     0
+
+# Depth-sensor noise. The stock value (0.2) is the copter air-barometer default:
+# it injects ~20 cm of noise into depth, which made depth hold look like it missed
+# its +/-5 cm requirement. The Bar30 resolves 0.2 mbar (~2 mm); 0.01 (~1 cm) is a
+# conservative stand-in for the real sensor.
+SIM_BARO_RND     0.01
