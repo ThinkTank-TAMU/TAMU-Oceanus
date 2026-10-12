@@ -24,7 +24,7 @@ Finalize GNC software configurations, validate remaining control systems in simu
 | Python | Custom application development (photogrammetry, control scripts) | All GNC members | [Python.org](https://www.python.org) |
 | MAVLink / pymavlink | Communication protocol between GNC software and hardware | All GNC members | [MAVLink Developer Guide](https://mavlink.io/en/) |
 | ArduSub (SITL) | Software-in-the-loop simulation for testing control algorithms and custom frame configurations | All GNC members | [ArduSub SITL Guide](https://ardusub.com/developers/sitl.html) |
-| GitHub | Version control and task management | All GNC members | [TAMU-MateROV Repo](https://github.com/3lover/TAMU-MateROV) |
+| GitHub | Version control and task management | All GNC members | [TAMU-Oceanus Repo](https://github.com/ThinkTank-TAMU/TAMU-Oceanus) |
 
 ---
 
@@ -51,15 +51,25 @@ Finalize GNC software configurations, validate remaining control systems in simu
 
 ## Documentation
 
-- **Summer progress tracker** — weekly updates on individual task progress
-- **Custom ArduSub config guide** — step-by-step instructions for defining and loading the custom motor matrix into ArduSub
+- **Summer progress tracker** — weekly updates on individual task progress: [Summer Progress Tracker](https://docs.google.com/spreadsheets/d/1wniiKqIndSM9qXOthWhWbw_rPwRCrXZwsqm2SjomHbY/edit)
+- **Custom ArduSub config guide** — step-by-step instructions for defining and loading the custom motor matrix into ArduSub: [Custom ArduSub Config Guide](https://docs.google.com/document/d/1i9UoEuhculI0tAi5T_Ha28t8Ut6Wo4uNkIs1gtb1Fso/edit) (repo version: [SITL-Simulation/README.md](SITL-Simulation/README.md#custom-ardusub-frame-config--step-by-step-deliverable))
 - **Photogrammetry app** — detailed usage instructions and architecture overview: [MATE-ROV-Photogrammetry](https://github.com/akvaithi/MATE-ROV-Photogrammetry)
+
+Later GNC documents (Drive, GNC folder): the Software Design Document (GNC-02-01-01-R0), the GNC ConOps, GNC-ICD-01, and [GNC-Requirement-Calculations.md](GNC-Requirement-Calculations.md).
+
+## Status (October 2026)
+
+| Goal | Status | Remaining |
+|------|--------|-----------|
+| 1. Configure & simulate 6-DoF vehicle | Done in SITL | Repeat on the assembled ROV; confirm thruster angles with TMS |
+| 2. Validate servo control architecture | Done in SITL ([report](SITL-Simulation/sample-runs/servo-control_report.md)) | Bench test of travel time, repeatability, holding torque |
+| 3. Refine photogrammetry pipeline | Done | Install and test RealityScan on the control PC; set the vehicle RTSP URL |
 
 ---
 
 ## Timeline
 
-All tasks are assigned and tracked via [GitHub Issues](https://github.com/3lover/TAMU-MateROV).
+All tasks are assigned and tracked via [GitHub Issues](https://github.com/ThinkTank-TAMU/TAMU-Oceanus).
 
 | Week | Tasks |
 |------|-------|
