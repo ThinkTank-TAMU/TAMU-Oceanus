@@ -1,0 +1,12 @@
+# GNC Practice Project 1 - 4-thruster TRAINING frame (SITL only).
+#
+# NOT the Oceanus vehicle. Never load this onto the Navigator: the real ROV is
+# params/vectored_6dof.parm (FRAME_CONFIG 2). Loaded by sim_entry.sh only when
+# FRAME=vectored_practice4 (compose service ardusub-sitl-practice4), then
+# params/sitl.parm on top.
+#
+# FRAME_CONFIG 7 is ArduSub's "Custom" slot. Stock Sub-4.5 has no motors there
+# (it falls through to SimpleROV-3); the practice image fills it with the 4-motor
+# matrix from apply_practice_frame.sh. See practice/P1-4-thruster-frame.md.
+
+FRAME_CONFIG     7      # 7 = Custom -> PRACTICE_4THRUSTER (practice image only)

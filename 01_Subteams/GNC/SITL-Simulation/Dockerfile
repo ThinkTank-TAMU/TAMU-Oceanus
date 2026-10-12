@@ -43,6 +43,14 @@ RUN bash /home/sub/apply_oceanus_model.sh libraries/SITL/SIM_Submarine.h
 COPY --chown=sub:sub apply_current_model.sh /home/sub/apply_current_model.sh
 RUN bash /home/sub/apply_current_model.sh libraries/SITL/SIM_Submarine.cpp
 
+# GNC Practice Project 1 (training only): a 4-thruster frame in FRAME_CONFIG 7
+# (Custom) plus the matching SITL physics. Applied only when built with
+# PRACTICE_FRAME=1 (the `ardusub-sitl-practice4` compose service); the default
+# image stays stock. See practice/P1-4-thruster-frame.md.
+ARG PRACTICE_FRAME=0
+COPY --chown=sub:sub apply_practice_frame.sh /home/sub/apply_practice_frame.sh
+RUN if [ "$PRACTICE_FRAME" = "1" ]; then bash /home/sub/apply_practice_frame.sh .; fi
+
 # Configure + build the ArduSub SITL binary
 RUN . ~/.profile && ./waf configure --board sitl && ./waf sub
 

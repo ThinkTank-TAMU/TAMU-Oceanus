@@ -13,3 +13,26 @@ services:
       - ./params:/sim/params:ro
     stdin_open: true
     tty: true
+
+  # GNC Practice Project 1 (training only): 4-thruster frame, FRAME_CONFIG 7.
+  # Not started by ./run_sitl.sh. Run it on its own (same ports, so stop the
+  # default sim first):  docker compose up --build ardusub-sitl-practice4
+  # See practice/P1-4-thruster-frame.md.
+  ardusub-sitl-practice4:
+    profiles: ["practice"]
+    build:
+      context: .
+      args:
+        ARDUSUB_REF: Sub-4.5
+        PRACTICE_FRAME: "1"
+    image: gnc-ardusub-sitl:practice4
+    container_name: ardusub-sitl-practice4
+    environment:
+      FRAME: vectored_practice4
+    ports:
+      - "5780:5780"
+      - "5781:5781"
+    volumes:
+      - ./params:/sim/params:ro
+    stdin_open: true
+    tty: true

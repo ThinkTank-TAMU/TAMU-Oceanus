@@ -9,8 +9,9 @@ behave identically on the **Navigator + Raspberry Pi 5 + BlueOS** stack
 (per `GNC-ICD-01`). That's why SITL is the right tool — not a hand-rolled
 physics sim, which wouldn't match the autopilot.
 
-> Covers **Goal 1 (Configure & Simulate 6-DoF Vehicle)** and **Practice Project 2
-> (MAVLink heartbeat + IMU read)**, and gives the servo/thruster work
+> Covers **Goal 1 (Configure & Simulate 6-DoF Vehicle)**, **Practice Project 1
+> (4-thruster motor matrix, [write-up](practice/P1-4-thruster-frame.md))** and
+> **Practice Project 2 (MAVLink heartbeat + IMU read)**, and gives the servo/thruster work
 > (**Goal 2**) a place to run before hardware is ready.
 
 ---
@@ -231,6 +232,8 @@ command-path latency **~10 ms** (mean) and **0 µs** command error in SITL.
 | `scripts/servo_control.py` | Drive the manipulator servos (ch 14-16) via MAV_CMD_DO_SET_SERVO |
 | `scripts/servo_test.py` | Servo latency + precision test → CSV, chart, report (Goal 2) |
 | `apply_current_model.sh` | Build-time patch making SIM_WIND act as a water current |
+| `apply_practice_frame.sh` | Practice Project 1 (training only): 4-thruster frame in `FRAME_CONFIG 7` + matching SITL physics. Applied only in the `ardusub-sitl-practice4` image |
+| `params/practice-4thruster.parm` + `scripts/practice4_mixing.py` | Practice Project 1 parameters and mixing check. See [practice/P1-4-thruster-frame.md](practice/P1-4-thruster-frame.md) |
 
 ---
 
@@ -257,9 +260,12 @@ command-path latency **~10 ms** (mean) and **0 µs** command error in SITL.
    Bar30-like noise (`0.01`) the default gains hold **±1.75 cm in a 0.5 m/s
    current**. Re-check on the vehicle.
 5. **Non-standard geometry?** If the thruster angles/positions differ from
-   BlueROV2 Heavy, a fully custom motor matrix means editing
-   `AP_Motors6DOF::setup_motors()` and rebuilding (bump `FRAME_CONFIG` to its
-   Custom slot). Open an issue and we'll branch the Dockerfile for it.
+   BlueROV2 Heavy, a fully custom motor matrix means filling the Custom slot
+   (`FRAME_CONFIG = 7`) in `AP_Motors6DOF::setup_motors()` **and** adding a
+   matching SITL thruster table, then rebuilding. In stock Sub-4.5 the Custom slot
+   is empty (it falls through to SimpleROV-3). Practice Project 1 does exactly this
+   for a 4-thruster training frame, as an opt-in build-time patch; follow it:
+   [practice/P1-4-thruster-frame.md](practice/P1-4-thruster-frame.md).
 
 ---
 

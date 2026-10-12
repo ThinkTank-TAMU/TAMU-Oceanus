@@ -64,6 +64,7 @@ Later GNC documents (Drive, GNC folder): the Software Design Document (GNC-02-01
 | 1. Configure & simulate 6-DoF vehicle | Done in SITL | Repeat on the assembled ROV; confirm thruster angles with TMS |
 | 2. Validate servo control architecture | Done in SITL ([report](SITL-Simulation/sample-runs/servo-control_report.md)) | Bench test of travel time, repeatability, holding torque |
 | 3. Refine photogrammetry pipeline | Done | Install and test RealityScan on the control PC; set the vehicle RTSP URL |
+| Practice projects 1–3 | Done: P1 4-thruster matrix in SITL ([write-up](SITL-Simulation/practice/P1-4-thruster-frame.md)), P2 `scripts/sitl_check.py`, P3 RTSP drop/latency logging | — |
 
 ---
 
