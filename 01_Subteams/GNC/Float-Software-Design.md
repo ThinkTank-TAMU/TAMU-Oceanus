@@ -17,7 +17,8 @@ hardware (F&P / TMS), and the C3 display.
 
 Status: the decision logic is desk-tested (35 unit tests, including a closed-loop
 simulation of both profiles). Not yet run on the Pico or in water. Ownership of the
-surface link and memory is still to be confirmed with C&C (GNC ConOps §1.2).
+surface link and memory is resolved: GNC owns it, since C&C merged into GNC (October 2026)
+and C&C's float requirements became GNC-FL-06..08.
 
 ## 2. Requirements
 
@@ -28,6 +29,12 @@ surface link and memory is still to be confirmed with C&C (GNC ConOps §1.2).
 | GNC-FL-03 | > 8 MB non-volatile memory | SD card on SPI0; internal flash fallback (2 MB, enough for one run at about 45 B/s) |
 | GNC-FL-04 | Bottom of float at 2.5 m ±33 cm for 30 s, then top of float at 40 cm ±33 cm for 30 s, two profiles, no surface break or ice contact | `Mission` state machine, `HoldTimer`, `pump_command` |
 | GNC-FL-05 | Detect overhead ice at > 0.75 m | Ultrasonic, `ICE_DETECT_M = 0.75`; no reading counts as ice |
+| GNC-FL-06.01, 06.02 | Formerly C&C-FL-01.01, 01.02; wording in the RVM | To be mapped |
+| GNC-FL-07.01..07.05 | Formerly C&C-FL-02.01..02.05; wording in the RVM | To be mapped |
+| GNC-FL-08.01 | Depth sensor (formerly C&C-FL-03.01) | `Depth_Sensor.py` |
+| GNC-FL-08.02 | Ultrasonic sensor (formerly C&C-FL-04.01) | Ice detection (§8) |
+| GNC-FL-08.03 | Light sensor (formerly C&C-FL-05.01) | To be mapped |
+| GNC-FL-08.04 | Temperature sensor (formerly C&C-FL-06.01) | To be mapped |
 | Task 4.1 | 7 sequential packets in each band, ≥ 20 packets on the graph; tell the judge the sensor offset | 1 Hz logging (Calc C6); `sensor_targets()` gives the ranges to tell the judge |
 
 ## 3. Hardware
@@ -192,8 +199,8 @@ link drops is resent on the next connection.
    ultrasonic model and calibration (all **[TBD]** above).
 2. Recovery behaviour after SHALLOW2: rising to the surface is assumed. Confirm with the
    Task 4 rules and the recovery plan.
-3. Surface-link and memory ownership with C&C (GNC ConOps §1.2; Roles doc gives float
-   autonomy to C&C, the RVM gives GNC-FL-01..05 to GNC).
+3. ~~Surface-link and memory ownership with C&C (GNC ConOps §1.2).~~ Closed (October
+   2026): C&C merged into GNC, so GNC owns the surface link and memory.
 4. The manual's note "seven sequential packets spanning 30 seconds (0, 5, … 30)": the 1 Hz
    log contains those packets. If the judges want exactly 5 s spacing displayed, the
    receiver can show every fifth packet of a hold.

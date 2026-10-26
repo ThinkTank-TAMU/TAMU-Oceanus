@@ -11,6 +11,7 @@ software. The other subteam folders are mostly documents.
 ```
 01_Subteams/          ← CANONICAL working tree (use this, by subteam)
   ├─ C&C  EPS  F&P  TMS    mostly docs / meeting notes / 3-week plans
+  │                        (C&C merged into GNC, Oct 2026; C&C/ is kept as its record)
   └─ GNC/                  the active software lives here
        ├─ 3_Week Plan.md           the GNC plan we work against
        ├─ Frame-Config-Decision.md final frame decision (read before touching the sim)

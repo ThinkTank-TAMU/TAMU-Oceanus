@@ -34,7 +34,7 @@ SERVO16_FUNCTION 0
 # 1.0 fresh water; set 1.025 before the ice-tank tasks (Requirement Calculations C7).
 BARO_SPEC_GRAV   1.0
 
-# --- Failsafes: PROPOSED, not yet approved with C&C / EPS (SDD Table 20). ---------------
+# --- Failsafes: PROPOSED, not yet approved with EPS (SDD Table 20). ---------------
 # Uncomment once agreed. Values are ArduSub 4.5 enumerations.
 # FS_GCS_ENABLE    4    # lost topside heartbeat (2.5 s): 4 = enter SURFACE mode (default 2 = disarm)
 # FS_LEAK_ENABLE   2    # leak: 2 = enter SURFACE mode (default 1 = warn only)
