@@ -15,15 +15,15 @@ monorepo — design, code, and documentation, organized by subteam.
 
 | Subteam | Focus |
 |---|---|
-| **GNC** — Guidance, Navigation & Control | Control software, ArduSub SITL simulation, photogrammetry |
+| **GNC** — Guidance, Navigation & Control | Control software, ArduSub SITL simulation, photogrammetry; communication & computing (ROV & float code, cameras, C3 station) |
 | **EPS** — Electrical Power Supply | Power distribution, PCB design |
 | **TMS** — Thermal Mechanisms & Structures | Chassis, frame, claw, and float CAD |
-| **C&C** — Communication & Computing | ROV & float code, software architecture |
+| **C&C** — Communication & Computing | Merged into GNC (Oct 2026) |
 | **F&P** — Fluids & Propulsion | Propellers, fluid/structural analysis (CFD/FEA) |
 
 Each subteam's plans and notes live under [`01_Subteams/`](01_Subteams/).
 
-> **Note:** C&C and GNC are planned to merge into a single subteam.
+> **Note:** C&C merged into GNC in October 2026. GNC now owns the ROV and float code, cameras and the C3 station; [`01_Subteams/C&C/`](01_Subteams/C&C/) is kept as C&C's record.
 
 ## Repository layout
 

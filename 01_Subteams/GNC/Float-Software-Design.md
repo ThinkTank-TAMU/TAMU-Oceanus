@@ -17,7 +17,8 @@ hardware (F&P / TMS), and the C3 display.
 
 Status: the decision logic is desk-tested (35 unit tests, including a closed-loop
 simulation of both profiles). Not yet run on the Pico or in water. Ownership of the
-surface link and memory is still to be confirmed with C&C (GNC ConOps §1.2).
+surface link and memory is resolved: GNC owns it, since C&C merged into GNC (October 2026)
+and C&C's float requirements became GNC-FL-06..08.
 
 ## 2. Requirements
 
@@ -28,6 +29,17 @@ surface link and memory is still to be confirmed with C&C (GNC ConOps §1.2).
 | GNC-FL-03 | > 8 MB non-volatile memory | SD card on SPI0; internal flash fallback (2 MB, enough for one run at about 45 B/s) |
 | GNC-FL-04 | Bottom of float at 2.5 m ±33 cm for 30 s, then top of float at 40 cm ±33 cm for 30 s, two profiles, no surface break or ice contact | `Mission` state machine, `HoldTimer`, `pump_command` |
 | GNC-FL-05 | Detect overhead ice at > 0.75 m | Ultrasonic, `ICE_DETECT_M = 0.75`; no reading counts as ice |
+| GNC-FL-06.01 | Microcontroller shall poll depth sensor (MS5837-30BA) at ≥1 Hz via I²C, timestamped, ≤1s latency | `Depth_Sensor.py`; 1 Hz logging (Calc C6) |
+| GNC-FL-06.02 | The microcontroller shall be capable of communicating data to the buoyancy engine via PWM | `pump_command` |
+| GNC-FL-07.01 | The float shall be able to transmit the collected data to the mission station once the mission has ended | BLE log download after recovery (GNC-FL-02) |
+| GNC-FL-07.02 | While maintaining a depth of 2 meters, the float shall record a data packet every 5 seconds | 1 Hz log (Calc C6), `HoldTimer` |
+| GNC-FL-07.03 | Each vertical profile shall show at least 7 data packets from the 2 meter depth | 1 Hz log, `HoldTimer`, `sensor_targets()` |
+| GNC-FL-07.04 | While starting at a depth of 4 meters, the float shall record a data packet every 0.5 meters it ascends, ranging inclusively from 4 meters to 0 meters | 1 Hz log, `sensor_targets()` |
+| GNC-FL-07.05 | The float shall be able to transmit one data packet prior to descending for its task | BLE live packets before GO (GNC-FL-02) |
+| GNC-FL-08.01 | The depth sensor (MS5837-30BA) shall remain functional to at least 5 m depth and measure depth to within ±5 cm over 0 to 5 m | To be mapped |
+| GNC-FL-08.02 | The ultrasonic sensor shall remain functional to at least 5 m depth and measure range to an overhead surface to within ±5 cm over 0.2 to 1.0 m | To be mapped |
+| GNC-FL-08.03 | The light sensor shall remain functional to at least 5 m depth and measure ambient light to within 10% of a calibrated reference meter | To be mapped |
+| GNC-FL-08.04 | The temperature sensor shall remain functional to at least 5 m depth and measure water temperature to within ±0.5 °C | To be mapped |
 | Task 4.1 | 7 sequential packets in each band, ≥ 20 packets on the graph; tell the judge the sensor offset | 1 Hz logging (Calc C6); `sensor_targets()` gives the ranges to tell the judge |
 
 ## 3. Hardware
@@ -192,8 +204,8 @@ link drops is resent on the next connection.
    ultrasonic model and calibration (all **[TBD]** above).
 2. Recovery behaviour after SHALLOW2: rising to the surface is assumed. Confirm with the
    Task 4 rules and the recovery plan.
-3. Surface-link and memory ownership with C&C (GNC ConOps §1.2; Roles doc gives float
-   autonomy to C&C, the RVM gives GNC-FL-01..05 to GNC).
+3. ~~Surface-link and memory ownership with C&C (GNC ConOps §1.2).~~ Closed (October
+   2026): C&C merged into GNC, so GNC owns the surface link and memory.
 4. The manual's note "seven sequential packets spanning 30 seconds (0, 5, … 30)": the 1 Hz
    log contains those packets. If the judges want exactly 5 s spacing displayed, the
    receiver can show every fifth packet of a hold.

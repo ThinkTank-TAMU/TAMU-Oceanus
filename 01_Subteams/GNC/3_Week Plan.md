@@ -68,6 +68,20 @@ Later GNC documents (Drive, GNC folder): the Software Design Document (GNC-02-01
 
 ---
 
+## Merged C&C scope
+
+C&C (Communication & Computing) merged into GNC in October 2026. GNC now owns the ROV and float code, the cameras and the C3 station, and C&C's goals carry over unchanged:
+
+| C&C goal (now GNC) | Deliverable |
+|------|-------------|
+| Research new software for the float and ROV against the new competition rules | Google Doc of new software and what the updated rules require |
+| Write sample code for individual components | Component code, reused where possible, on GitHub |
+| Learn the ROV code and guidelines | Written plan, architecture diagram, notes on the ROV code |
+
+C&C's members, training plan and tools are in [`../C&C/3_Week Plan.md`](../C&C/3_Week%20Plan.md) until the C&C lead moves them into this plan.
+
+---
+
 ## Timeline
 
 All tasks are assigned and tracked via [GitHub Issues](https://github.com/ThinkTank-TAMU/TAMU-Oceanus).
