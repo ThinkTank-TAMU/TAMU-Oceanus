@@ -89,14 +89,14 @@ Replaces the earlier ±35 cm placeholder, which was too loose.
 - If the ice is detected at 0.75 m, the float has 0.75 − 0.40 = **35 cm** to decelerate
   and settle at 40 cm, and a further 33 cm of tolerance before contacting the ice.
 
-## C6 — Logging interval ≤ 5 s (GNC-FL-06.07)
+## C6 — Logging interval ≤ 5 s (GNC-FL-07.02)
 
 - Task 4.1 requires seven sequential data packets inside each 30 s hold.
 - Seven packets span six intervals, and 30 s / 6 = **5 s**. A 5 s interval therefore
   has zero margin: a single late or dropped packet fails the hold. **Recommend
   logging at 1 s or faster.**
 
-## C7 — Specific gravity 1.025 (GNC-ROV-06.04)
+## C7 — Specific gravity 1.025 (GNC-ROV-04.01)
 
 - Manual (OPER-002 and Task 4.1): the EGADS ice tank has an SG of about 1.025.
 - Depth = P / (ρ·g). Using fresh-water density (1000 kg/m³) over-reads depth by about

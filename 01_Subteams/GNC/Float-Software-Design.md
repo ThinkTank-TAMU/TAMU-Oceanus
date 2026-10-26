@@ -29,12 +29,17 @@ and C&C's float requirements became GNC-FL-06..08.
 | GNC-FL-03 | > 8 MB non-volatile memory | SD card on SPI0; internal flash fallback (2 MB, enough for one run at about 45 B/s) |
 | GNC-FL-04 | Bottom of float at 2.5 m ±33 cm for 30 s, then top of float at 40 cm ±33 cm for 30 s, two profiles, no surface break or ice contact | `Mission` state machine, `HoldTimer`, `pump_command` |
 | GNC-FL-05 | Detect overhead ice at > 0.75 m | Ultrasonic, `ICE_DETECT_M = 0.75`; no reading counts as ice |
-| GNC-FL-06.01, 06.02 | Formerly C&C-FL-01.01, 01.02; wording in the RVM | To be mapped |
-| GNC-FL-07.01..07.05 | Formerly C&C-FL-02.01..02.05; wording in the RVM | To be mapped |
-| GNC-FL-08.01 | Depth sensor (formerly C&C-FL-03.01) | `Depth_Sensor.py` |
-| GNC-FL-08.02 | Ultrasonic sensor (formerly C&C-FL-04.01) | Ice detection (§8) |
-| GNC-FL-08.03 | Light sensor (formerly C&C-FL-05.01) | To be mapped |
-| GNC-FL-08.04 | Temperature sensor (formerly C&C-FL-06.01) | To be mapped |
+| GNC-FL-06.01 | Microcontroller shall poll depth sensor (MS5837-30BA) at ≥1 Hz via I²C, timestamped, ≤1s latency | `Depth_Sensor.py`; 1 Hz logging (Calc C6) |
+| GNC-FL-06.02 | The microcontroller shall be capable of communicating data to the buoyancy engine via PWM | `pump_command` |
+| GNC-FL-07.01 | The float shall be able to transmit the collected data to the mission station once the mission has ended | BLE log download after recovery (GNC-FL-02) |
+| GNC-FL-07.02 | While maintaining a depth of 2 meters, the float shall record a data packet every 5 seconds | 1 Hz log (Calc C6), `HoldTimer` |
+| GNC-FL-07.03 | Each vertical profile shall show at least 7 data packets from the 2 meter depth | 1 Hz log, `HoldTimer`, `sensor_targets()` |
+| GNC-FL-07.04 | While starting at a depth of 4 meters, the float shall record a data packet every 0.5 meters it ascends, ranging inclusively from 4 meters to 0 meters | 1 Hz log, `sensor_targets()` |
+| GNC-FL-07.05 | The float shall be able to transmit one data packet prior to descending for its task | BLE live packets before GO (GNC-FL-02) |
+| GNC-FL-08.01 | The depth sensor (MS5837-30BA) shall remain functional to at least 5 m depth and measure depth to within ±5 cm over 0 to 5 m | To be mapped |
+| GNC-FL-08.02 | The ultrasonic sensor shall remain functional to at least 5 m depth and measure range to an overhead surface to within ±5 cm over 0.2 to 1.0 m | To be mapped |
+| GNC-FL-08.03 | The light sensor shall remain functional to at least 5 m depth and measure ambient light to within 10% of a calibrated reference meter | To be mapped |
+| GNC-FL-08.04 | The temperature sensor shall remain functional to at least 5 m depth and measure water temperature to within ±0.5 °C | To be mapped |
 | Task 4.1 | 7 sequential packets in each band, ≥ 20 packets on the graph; tell the judge the sensor offset | 1 Hz logging (Calc C6); `sensor_targets()` gives the ranges to tell the judge |
 
 ## 3. Hardware
