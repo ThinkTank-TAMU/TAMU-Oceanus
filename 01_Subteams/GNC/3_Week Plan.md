@@ -52,7 +52,7 @@ Finalize GNC software configurations, validate remaining control systems in simu
 ## Documentation
 
 - **Summer progress tracker** — weekly updates on individual task progress: [Summer Progress Tracker](https://docs.google.com/spreadsheets/d/1wniiKqIndSM9qXOthWhWbw_rPwRCrXZwsqm2SjomHbY/edit)
-- **Custom ArduSub config guide** — step-by-step instructions for defining and loading the custom motor matrix into ArduSub: [Custom ArduSub Config Guide](https://docs.google.com/document/d/1i9UoEuhculI0tAi5T_Ha28t8Ut6Wo4uNkIs1gtb1Fso/edit) (repo version: [SITL-Simulation/README.md](SITL-Simulation/README.md#custom-ardusub-frame-config--step-by-step-deliverable))
+- **Custom ArduSub config guide** — step-by-step instructions for defining and loading the custom motor matrix into ArduSub: [Custom ArduSub Config Guide](https://docs.google.com/document/d/1i9UoEuhculI0tAi5T_Ha28t8Ut6Wo4uNkIs1gtb1Fso/edit) (repo version: [SITL-Simulation/README.md](ROV/SITL-Simulation/README.md#custom-ardusub-frame-config--step-by-step-deliverable))
 - **Photogrammetry app** — detailed usage instructions and architecture overview: [MATE-ROV-Photogrammetry](https://github.com/akvaithi/MATE-ROV-Photogrammetry)
 
 Later GNC documents (Drive, GNC folder): the Software Design Document (GNC-02-01-01-R0), the GNC ConOps, GNC-ICD-01, and [GNC-Requirement-Calculations.md](GNC-Requirement-Calculations.md).
@@ -62,9 +62,9 @@ Later GNC documents (Drive, GNC folder): the Software Design Document (GNC-02-01
 | Goal | Status | Remaining |
 |------|--------|-----------|
 | 1. Configure & simulate 6-DoF vehicle | Done in SITL | Repeat on the assembled ROV; confirm thruster angles with TMS |
-| 2. Validate servo control architecture | Done in SITL ([report](SITL-Simulation/sample-runs/servo-control_report.md)) | Bench test of travel time, repeatability, holding torque |
+| 2. Validate servo control architecture | Done in SITL ([report](ROV/SITL-Simulation/sample-runs/servo-control_report.md)) | Bench test of travel time, repeatability, holding torque |
 | 3. Refine photogrammetry pipeline | Done | Install and test RealityScan on the control PC; set the vehicle RTSP URL |
-| Practice projects 1–3 | Done: P1 4-thruster matrix in SITL ([write-up](SITL-Simulation/practice/P1-4-thruster-frame.md)), P2 `scripts/sitl_check.py`, P3 RTSP drop/latency logging | — |
+| Practice projects 1–3 | Done: P1 4-thruster matrix in SITL ([write-up](ROV/SITL-Simulation/practice/P1-4-thruster-frame.md)), P2 `scripts/sitl_check.py`, P3 RTSP drop/latency logging | — |
 
 ---
 
@@ -78,7 +78,33 @@ C&C (Communication & Computing) merged into GNC in October 2026. GNC now owns th
 | Write sample code for individual components | Component code, reused where possible, on GitHub |
 | Learn the ROV code and guidelines | Written plan, architecture diagram, notes on the ROV code |
 
-C&C's members, training plan and tools are in [`../C&C/3_Week Plan.md`](../C&C/3_Week%20Plan.md) until the C&C lead moves them into this plan.
+### Former C&C members
+
+| Name | Skills | Training focus |
+|------|--------|----------------|
+| Arnav Mehta | Python, Git, diagram creation | Understanding code; welding and breadboard basics |
+| Landon Riddle | Python, welding | Understanding C&C tasks; fundamentals of MicroPython |
+| Andrei Bugayong | Python, C++, diagram creation | TBD |
+| Aarav Pulsani | Python, Git, diagram creation | Breadboard basics |
+
+### C&C tools
+
+| Software/Tool | Purpose | Members | Resources/Links |
+|---------------|---------|---------|-----------------|
+| VSCode (MicroPython) | Primary development environment for the float | Arnav, Aarav, Andrei | [MicroPico Extension](https://github.com/paulober/MicroPico) |
+
+### C&C training plan
+
+- Analyze previous documentation to find the direction of MATE ROV and understand how past tools were used
+- Ensure all members have a baseline understanding of: GitHub commands, MicroPython, documentation practices, and breadboard fundamentals
+
+| Topic | Resource | Priority |
+|-------|----------|----------|
+| Git & GitHub | [Git and GitHub Tutorial for Beginners](https://www.youtube.com/watch?v=tRZGeaHPoaw) | Lower — can edit on GitHub manually and test code in VS Code |
+| MicroPython | Past float code ([`Float/FloatCode/`](Float/FloatCode/)) + [Learn MicroPython Part 1](https://www.youtube.com/watch?v=LtBKTzFGLKY) | Medium |
+| Breadboard basics | [Breadboard — Explained in Depth](https://www.youtube.com/watch?v=6WReFkfrUIk) | Lower — not critical until fall semester |
+
+The C&C Tracksheet (task tracking and progress log) stays in the shared Drive folder.
 
 ---
 

@@ -40,10 +40,10 @@ A prebuilt macOS bundle (Apple Silicon, macOS 12+) is also on the
 
 ## Updating this submodule to the latest app version
 ```bash
-cd "01_Subteams/GNC/Photogrammetry-App"
+cd "01_Subteams/GNC/ROV/Photogrammetry-App"
 git pull origin main
 cd -
-git add "01_Subteams/GNC/Photogrammetry-App"
+git add "01_Subteams/GNC/ROV/Photogrammetry-App"
 git commit -m "Update photogrammetry submodule"
 git push
 ```

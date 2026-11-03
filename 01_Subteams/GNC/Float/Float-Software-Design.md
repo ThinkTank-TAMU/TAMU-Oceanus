@@ -4,7 +4,7 @@
 
 This is the document the GNC SDD (GNC-02-01-01-R0, §1.2) refers to when it says the
 float firmware is "documented separately". It covers the float controller in
-`FloatCode/` of the team repository, for MATE 2026 Task 4.1 (floats under the ice) and
+`01_Subteams/GNC/Float/FloatCode/` of the team repository, for MATE 2026 Task 4.1 (floats under the ice) and
 the RVM rows GNC-FL-01 to 05. Values marked **[TBD]** are design targets that have
 to be measured on the built float.
 

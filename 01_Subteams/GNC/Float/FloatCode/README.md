@@ -1,7 +1,7 @@
 # FloatCode: the Oceanus float controller
 
 MicroPython for the float's Raspberry Pi Pico W (MATE 2026 Task 4.1, RVM GNC-FL-01 to 05).
-The design is in [Float-Software-Design.md](../01_Subteams/GNC/Float-Software-Design.md)
+The design is in [Float-Software-Design.md](../Float-Software-Design.md)
 (also in the GNC Drive folder as GNC-02-01-02-R0).
 
 ## Files

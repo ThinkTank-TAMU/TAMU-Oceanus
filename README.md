@@ -23,14 +23,13 @@ monorepo — design, code, and documentation, organized by subteam.
 
 Each subteam's plans and notes live under [`01_Subteams/`](01_Subteams/).
 
-> **Note:** C&C merged into GNC in October 2026. GNC now owns the ROV and float code, cameras and the C3 station; [`01_Subteams/C&C/`](01_Subteams/C&C/) is kept as C&C's record.
+> **Note:** C&C merged into GNC in October 2026. GNC now owns the ROV and float code, cameras and the C3 station; C&C's plan was folded into the [GNC 3-week plan](01_Subteams/GNC/3_Week%20Plan.md) and its float code moved to [`01_Subteams/GNC/Float/FloatCode/`](01_Subteams/GNC/Float/FloatCode/).
 
 ## Repository layout
 
 | Path | Contents |
 |---|---|
 | [`01_Subteams/`](01_Subteams/) | Active work, by subteam (**canonical**) |
-| [`FloatCode/`](FloatCode/) | Float (vertical profiler) firmware |
 | [`ROV CAD files/`](ROV%20CAD%20files/) | Mechanical CAD |
 | [`WiringSchematics/`](WiringSchematics/) | Electrical wiring diagrams |
 | [`Technical Data/`](Technical%20Data/) | Datasheets and specs |
@@ -39,5 +38,6 @@ Each subteam's plans and notes live under [`01_Subteams/`](01_Subteams/).
 
 ## Software highlights
 
-- **GNC SITL simulation** — full ArduSub 6-DoF sim of our ROV, for testing control before hardware: [`01_Subteams/GNC/SITL-Simulation`](01_Subteams/GNC/SITL-Simulation)
+- **GNC SITL simulation** — full ArduSub 6-DoF sim of our ROV, for testing control before hardware: [`01_Subteams/GNC/ROV/SITL-Simulation`](01_Subteams/GNC/ROV/SITL-Simulation)
+- **Float controller** — MicroPython depth-profiling firmware for the Pico W float, with desk tests: [`01_Subteams/GNC/Float/FloatCode`](01_Subteams/GNC/Float/FloatCode)
 - **Photogrammetry Studio** — RTSP-to-3D scanning app (macOS): [latest release](https://github.com/akvaithi/MATE-ROV-Photogrammetry/releases/latest)

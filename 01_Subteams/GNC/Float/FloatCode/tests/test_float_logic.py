@@ -1,6 +1,6 @@
 """Desk tests for float_logic (no MicroPython, no hardware).
 
-    cd FloatCode && python3 -m unittest discover -s tests -v
+    cd 01_Subteams/GNC/Float/FloatCode && python3 -m unittest discover -s tests -v
 """
 
 import os
