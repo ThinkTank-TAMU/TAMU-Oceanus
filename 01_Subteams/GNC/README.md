@@ -7,7 +7,7 @@ GNC owns the software for both of Team Oceanus's vehicles: the ROV and the float
 > [3-week plan](3_Week%20Plan.md#merged-cc-scope) and its code now lives in
 > [`Float/FloatCode/`](Float/FloatCode/). The `01_Subteams/C&C/` folder was retired.
 
-Shared Drive folder (same layout): <https://drive.google.com/drive/folders/1-ku-eTshWN_Sum3-sCxpTIQi-aLZqLar>
+Shared Drive folder (same layout): <https://drive.google.com/drive/folders/14PKwht7TCVThdr-HMJlwMkchnKZa-aEq>
 
 ## Layout
 

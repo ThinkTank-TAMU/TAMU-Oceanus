@@ -51,8 +51,8 @@ Finalize GNC software configurations, validate remaining control systems in simu
 
 ## Documentation
 
-- **Summer progress tracker** — weekly updates on individual task progress: [Summer Progress Tracker](https://docs.google.com/spreadsheets/d/1wniiKqIndSM9qXOthWhWbw_rPwRCrXZwsqm2SjomHbY/edit)
-- **Custom ArduSub config guide** — step-by-step instructions for defining and loading the custom motor matrix into ArduSub: [Custom ArduSub Config Guide](https://docs.google.com/document/d/1i9UoEuhculI0tAi5T_Ha28t8Ut6Wo4uNkIs1gtb1Fso/edit) (repo version: [SITL-Simulation/README.md](ROV/SITL-Simulation/README.md#custom-ardusub-frame-config--step-by-step-deliverable))
+- **Summer progress tracker** — weekly updates on individual task progress: [Summer Progress Tracker](https://docs.google.com/spreadsheets/d/17Rq_QSg7d1qAg59cb5_AywRH34jZn5b74rd8ltDDAbU/edit)
+- **Custom ArduSub config guide** — step-by-step instructions for defining and loading the custom motor matrix into ArduSub: [Custom ArduSub Config Guide](https://docs.google.com/document/d/1E_nJt_mt6nWvVuDUicAQHpBzv9n1OObz-ZtZRV2fyHw/edit) (repo version: [SITL-Simulation/README.md](ROV/SITL-Simulation/README.md#custom-ardusub-frame-config--step-by-step-deliverable))
 - **Photogrammetry app** — detailed usage instructions and architecture overview: [MATE-ROV-Photogrammetry](https://github.com/akvaithi/MATE-ROV-Photogrammetry)
 
 Later GNC documents (Drive, GNC folder): the Software Design Document (GNC-02-01-01-R0), the GNC ConOps, GNC-ICD-01, and [GNC-Requirement-Calculations.md](GNC-Requirement-Calculations.md).
