@@ -5,7 +5,7 @@ Matrix (RVM). Each RVM row that uses a number links to its section here rather t
 carrying the math in its rationale column.
 
 Sources: the 2026 PIONEER Manual (`2026 PIONEER Manual_FINAL_Cover.pdf` at the
-repo root), the SITL runs in `SITL-Simulation/sample-runs/`, and the published
+repo root), the SITL runs in `ROV/SITL-Simulation/sample-runs/`, and the published
 references listed at the bottom.
 
 ---

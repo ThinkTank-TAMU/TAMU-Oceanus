@@ -10,13 +10,18 @@ software. The other subteam folders are mostly documents.
 
 ```
 01_Subteams/          ← CANONICAL working tree (use this, by subteam)
-  ├─ C&C  EPS  F&P  TMS    mostly docs / meeting notes / 3-week plans
-  │                        (C&C merged into GNC, Oct 2026; C&C/ is kept as its record)
-  └─ GNC/                  the active software lives here
-       ├─ 3_Week Plan.md           the GNC plan we work against
-       ├─ Frame-Config-Decision.md final frame decision (read before touching the sim)
-       ├─ SITL-Simulation/         ArduSub SITL kit (Goals 1 & 2) — see its own README
-       └─ Photogrammetry-App/      git submodule → akvaithi/MATE-ROV-Photogrammetry (Goal 3)
+  ├─ EPS  F&P  TMS         mostly docs / meeting notes / 3-week plans
+  └─ GNC/                  the active software lives here (C&C merged in, Oct 2026)
+       ├─ README.md                what's in ROV/ vs Float/, Drive folder link
+       ├─ 3_Week Plan.md           the GNC plan we work against (shared)
+       ├─ GNC-Requirement-Calculations.md   RVM derivations (shared)
+       ├─ ROV/
+       │    ├─ Frame-Config-Decision.md  final frame decision (read before touching the sim)
+       │    ├─ SITL-Simulation/          ArduSub SITL kit (Goals 1 & 2) — see its own README
+       │    └─ Photogrammetry-App/       git submodule → akvaithi/MATE-ROV-Photogrammetry (Goal 3)
+       └─ Float/
+            ├─ Float-Software-Design.md  float firmware design doc
+            └─ FloatCode/                Pico W MicroPython controller + desk tests
 25-26/                ← LEGACY archive. Do NOT add new work here.
 ```
 
@@ -26,9 +31,9 @@ folder is kept only for reference; new GNC code, docs, and runs go in
 
 ## The Photogrammetry-App submodule
 
-`01_Subteams/GNC/Photogrammetry-App` is a **git submodule** pointing at the
+`01_Subteams/GNC/ROV/Photogrammetry-App` is a **git submodule** pointing at the
 personal repo `akvaithi/MATE-ROV-Photogrammetry`. It has its own `.git` and its
-own [CLAUDE.md](01_Subteams/GNC/Photogrammetry-App/CLAUDE.md). Commit app changes
+own [CLAUDE.md](01_Subteams/GNC/ROV/Photogrammetry-App/CLAUDE.md). Commit app changes
 *inside the submodule* (push to its own remote), then bump the submodule pointer
 in this repo separately.
 
@@ -42,18 +47,18 @@ in this repo separately.
 - **Vehicle physics model** (mass 22 kg, dims ~0.60×0.50×0.35 m) is
   **design-target/estimated** — only the thrusters are a confirmed real value.
   The 25-26 spec sheet is a blank template; update when the ROV is built & weighed.
-  See [SITL-Simulation/OCEANUS-VEHICLE-MODEL.md](01_Subteams/GNC/SITL-Simulation/OCEANUS-VEHICLE-MODEL.md).
+  See [SITL-Simulation/OCEANUS-VEHICLE-MODEL.md](01_Subteams/GNC/ROV/SITL-Simulation/OCEANUS-VEHICLE-MODEL.md).
 
 ## GNC dev environment (macOS, Apple Silicon)
 
 The SITL kit runs the **real ArduSub firmware** in Docker against a simulated
 vehicle, so control logic tested here transfers to the Navigator unchanged.
 
-- Build & launch: `cd 01_Subteams/GNC/SITL-Simulation && ./run_sitl.sh`
+- Build & launch: `cd 01_Subteams/GNC/ROV/SITL-Simulation && ./run_sitl.sh`
   (first run builds the image, ~20–40 min).
 - Connect: scripts/pymavlink → `tcp:127.0.0.1:5780`; QGroundControl → `tcp:localhost:5781`.
   (SITL itself uses 5760–576x internally — don't reuse those for the MAVProxy hub.)
-- Python scripts run from `SITL-Simulation/.venv` (`pip install -r scripts/requirements.txt`).
+- Python scripts run from `ROV/SITL-Simulation/.venv` (`pip install -r scripts/requirements.txt`).
 
 ### Platform gotchas (these have bitten us before)
 
@@ -68,6 +73,8 @@ vehicle, so control logic tested here transfers to the Navigator unchanged.
   in-file path edits (this caused a follow-up fix PR once).
 
 ### Station keeping and SITL parameters (Sept 2026)
+
+Paths below are relative to `01_Subteams/GNC/ROV/SITL-Simulation/`.
 
 - **Station keeping is camera-based** (`scripts/station_keeping.py --source vision`, the
   default). IMU + depth cannot give horizontal position: accelerometer error grows as
@@ -86,5 +93,8 @@ vehicle, so control logic tested here transfers to the Navigator unchanged.
 
 Goals 1 (6-DoF sim + custom frame) and 2 (servo control architecture) are
 **done** and documented; the SITL kit, sample runs, and a summary PDF live under
-`01_Subteams/GNC/SITL-Simulation/`. Goal 3 (photogrammetry RTSP drop/latency
+`01_Subteams/GNC/ROV/SITL-Simulation/`. Goal 3 (photogrammetry RTSP drop/latency
 error logging) is the remaining item and lives in the submodule.
+
+The float (C&C's former work: Pico W, BLE, depth profiling) lives in
+`01_Subteams/GNC/Float/`. Desk tests: `cd 01_Subteams/GNC/Float/FloatCode && python3 -m unittest discover -s tests`.

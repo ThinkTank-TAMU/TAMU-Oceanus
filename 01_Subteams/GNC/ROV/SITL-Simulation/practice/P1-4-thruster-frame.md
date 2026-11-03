@@ -4,7 +4,7 @@
 > `vectored_6dof`, `FRAME_CONFIG = 2` ([../params/vectored_6dof.parm](../params/vectored_6dof.parm)).
 > Nothing here changes that file, `sitl.parm`, or what `./run_sitl.sh` starts.
 
-From the GNC plan ([3_Week Plan.md](../../3_Week%20Plan.md), Practice Projects):
+From the GNC plan ([3_Week Plan.md](../../../3_Week%20Plan.md), Practice Projects):
 
 > **Project 1 — Simulation:** Create a basic alternative motor matrix (e.g., simple
 > 4-thruster setup) and load it into SITL to understand the configuration pipeline.
@@ -105,7 +105,7 @@ parameter file, and ours is passed explicitly.
 ## Run it
 
 ```bash
-cd 01_Subteams/GNC/SITL-Simulation
+cd 01_Subteams/GNC/ROV/SITL-Simulation
 docker compose down                                   # stop the default sim (same ports)
 docker compose up --build ardusub-sitl-practice4      # first build ~2 min on top of the cached image
 # wait for "AP: Frame: PRACTICE_4THRUSTER" and the MAVProxy banner, then in another terminal:

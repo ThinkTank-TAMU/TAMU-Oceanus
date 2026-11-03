@@ -66,7 +66,7 @@ June 2026; 4 CW + 4 CCW Diamond Dynamics TD1.2, ICD wiring T1–T8). See
 ## Quick start
 
 ```bash
-cd "01_Subteams/GNC/SITL-Simulation"
+cd "01_Subteams/GNC/ROV/SITL-Simulation"
 ./run_sitl.sh            # first run builds the image (~20-40 min, ~6 GB), then launches
 ```
 
@@ -80,7 +80,7 @@ When it prints the MAVProxy banner, the sim is live:
 Then, in another terminal:
 
 ```bash
-cd "01_Subteams/GNC/SITL-Simulation"
+cd "01_Subteams/GNC/ROV/SITL-Simulation"
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r scripts/requirements.txt
 
